@@ -256,8 +256,5 @@ namespace Blundergat.Io.Ply.Test
 			Assert.AreEqual(8, mesh.Points.Count);
 			Assert.AreEqual(5, mesh.Edges.Count);
 		}
-
-
-
 	}
 }
