@@ -1,6 +1,6 @@
 ﻿using Blundergat.Common.Helpers;
 using Blundergat.Common.Model.Io;
-using Blundergat.Common.Settings.Interfaces;
+using Blundergat.Io.Settings;
 using Blundergat.Io.Wavefront.Models;
 using Microsoft.Extensions.Logging;
 using System;
@@ -15,8 +15,8 @@ namespace Blundergat.Io.Wavefront
 	public class ObjAssetImporterExporter : AssetImporterExporterBase, IObjAssetImporterExporter
 	{
 		public ObjAssetImporterExporter(
-			ISettingsProvider settingsProvider,
-			ILogger<ObjAssetImporterExporter> logger) : base(settingsProvider, logger)
+			ISettings settings,
+			ILogger<ObjAssetImporterExporter> logger) : base(settings, logger)
 		{
 		}
 

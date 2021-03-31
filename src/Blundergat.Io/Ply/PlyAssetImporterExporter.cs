@@ -1,10 +1,10 @@
 using Blundergat.Common.Model.Io;
-using Blundergat.Common.Settings.Interfaces;
 using Blundergat.Common.Types;
 using Blundergat.Io.Ply.Constants;
 using Blundergat.Io.Ply.Helpers;
 using Blundergat.Io.Ply.Models;
 using Blundergat.Io.Ply.ReaderWriters;
+using Blundergat.Io.Settings;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,14 +17,14 @@ namespace Blundergat.Io.Ply
 	[AssetImporterExporter(".ply", "Polygon File Format")]
 	public class PlyAssetImporterExporter : AssetImporterExporterBase, IPlyAssetImporterExporter
 	{
-		private readonly ISettingsProvider _settingsProvider;
+		private readonly ISettings _settings;
 		private readonly ILogger<PlyAssetImporterExporter> _logger;
 
 		public PlyAssetImporterExporter(
-			ISettingsProvider settingsProvider, 
-			ILogger<PlyAssetImporterExporter> logger) : base(settingsProvider, logger)
+			ISettings settings, 
+			ILogger<PlyAssetImporterExporter> logger) : base(settings, logger)
 		{
-			_settingsProvider = settingsProvider;
+			_settings = settings;
 			_logger = logger;
 		}
 
@@ -213,8 +213,8 @@ namespace Blundergat.Io.Ply
 		{
 			var plyFile = new PlyFile(filePath);
 
-			plyFile.Header.PlyFileFormat = _settingsProvider != null ?
-				_settingsProvider.DataSettings.DefaultPlyFileFormat.Value :
+			plyFile.Header.PlyFileFormat = _settings != null ? 
+				_settings.DefaultPlyFileFormat : 
 				PlyFileFormat.BinaryLittleEndian;
 
 			AddComments(plyFile, mesh);

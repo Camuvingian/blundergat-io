@@ -1,6 +1,6 @@
 ﻿using Blundergat.Common.Helpers;
 using Blundergat.Common.Model.Io;
-using Blundergat.Common.Settings.Interfaces;
+using Blundergat.Io.Settings;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,12 +11,12 @@ namespace Blundergat.Io
 {
 	public abstract class AssetImporterExporterBase : IAssetImporterExporter
 	{
-		private readonly ISettingsProvider _settingsProvider;
+		private readonly ISettings _settings;
 		private readonly ILogger _logger;
 
-		public AssetImporterExporterBase(ISettingsProvider settingsProvider, ILogger logger)
+		public AssetImporterExporterBase(ISettings settings, ILogger logger)
 		{
-			_settingsProvider = settingsProvider;
+			_settings = settings;
 			_logger = logger;
 		}
 
@@ -66,8 +66,8 @@ namespace Blundergat.Io
 			if (!Directory.Exists(directory))
 			{
 				// Check if this was a relative path and correct. 
-				if (_settingsProvider != null)
-					directory = _settingsProvider.DataSettings.BaseDirectory.Value;
+				if (_settings != null)
+					directory = _settings.BaseDirectory;
 
 				if (!Directory.Exists(directory))
 					throw new IOException($"Directory \"{directory}\" does not exists");

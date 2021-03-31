@@ -1,8 +1,6 @@
 ﻿using Blundergat.Common.Helpers;
 using Blundergat.Common.Model;
 using Blundergat.Common.Model.Io;
-using Blundergat.Common.Settings.Impl;
-using Blundergat.Common.Settings.Interfaces;
 using Blundergat.Common.Types;
 using Blundergat.Common.Adapters;
 using Moq;
@@ -15,6 +13,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Threading.Tasks;
 using Blundergat.Io.Test.Helpers;
+using Blundergat.Io.Settings;
 
 namespace Blundergat.Io.Ply.Test
 {
@@ -24,16 +23,15 @@ namespace Blundergat.Io.Ply.Test
 		private AssetImporterExporterBase _importerExporter;
 		private string _basicPlyFilePath = String.Empty;
 
-		private Mock<ISettingsProvider> _mockSettingsProvider;
+		private Mock<ISettings> _mockSettings;
 
 		[SetUp]
 		public void Setup()
 		{
-			_mockSettingsProvider = new Mock<ISettingsProvider>();
-			_mockSettingsProvider.Setup(m => m.DataSettings).Returns(new DataSettings());
-			_mockSettingsProvider.Object.DataSettings.DefaultPlyFileFormat.Value = Common.Types.PlyFileFormat.BinaryLittleEndian;
+			_mockSettings = new Mock<ISettings>();
+			_mockSettings.Object.DefaultPlyFileFormat = PlyFileFormat.BinaryLittleEndian;
 
-			_importerExporter = new PlyAssetImporterExporter(_mockSettingsProvider.Object, null);
+			_importerExporter = new PlyAssetImporterExporter(_mockSettings.Object, null);
 
 			var assembly = Assembly.GetExecutingAssembly();
 			_basicPlyFilePath = Path.Combine(Path.GetDirectoryName(assembly.Location), "Resources", "basic.ply");
@@ -121,7 +119,7 @@ namespace Blundergat.Io.Ply.Test
 			const string fileNameAscii = "small_point_cloud_with_color.ply";
 			const string fileNameBinary = "small_point_cloud_with_color_binary.ply";
 
-			var importerExporter = new PlyAssetImporterExporter(_mockSettingsProvider.Object, null);
+			var importerExporter = new PlyAssetImporterExporter(_mockSettings.Object, null);
 
 			string filePath = Path.Combine(TestConstants.ResourcesFolderPath, fileNameAscii);
 			var asciiScene = await importerExporter.ImportFileAsync(filePath);
@@ -226,9 +224,9 @@ namespace Blundergat.Io.Ply.Test
 
 			try
 			{
-				_mockSettingsProvider.Object.DataSettings.DefaultPlyFileFormat.Value = plyFileFormat;
+				_mockSettings.Object.DefaultPlyFileFormat = plyFileFormat;
 
-				_importerExporter = new PlyAssetImporterExporter(_mockSettingsProvider.Object, null);
+				_importerExporter = new PlyAssetImporterExporter(_mockSettings.Object, null);
 				await _importerExporter.ExportFileAsync(scene, filePath, true);
 
 				var importedScene = await _importerExporter.ImportFileAsync(filePath);
@@ -256,5 +254,8 @@ namespace Blundergat.Io.Ply.Test
 			Assert.AreEqual(8, mesh.Points.Count);
 			Assert.AreEqual(5, mesh.Edges.Count);
 		}
+
+
+
 	}
 }
