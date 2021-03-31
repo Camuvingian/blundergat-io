@@ -23,12 +23,12 @@ namespace Blundergat.Io.Ply.Test
 		private AssetImporterExporterBase _importerExporter;
 		private string _basicPlyFilePath = String.Empty;
 
-		private Mock<ISettings> _mockSettings;
+		private Mock<IIoSettings> _mockSettings;
 
 		[SetUp]
 		public void Setup()
 		{
-			_mockSettings = new Mock<ISettings>();
+			_mockSettings = new Mock<IIoSettings>();
 			_mockSettings.Object.DefaultPlyFileFormat = PlyFileFormat.BinaryLittleEndian;
 
 			_importerExporter = new PlyAssetImporterExporter(_mockSettings.Object, null);

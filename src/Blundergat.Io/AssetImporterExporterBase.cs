@@ -11,10 +11,10 @@ namespace Blundergat.Io
 {
 	public abstract class AssetImporterExporterBase : IAssetImporterExporter
 	{
-		private readonly ISettings _settings;
+		private readonly IIoSettings _settings;
 		private readonly ILogger _logger;
 
-		public AssetImporterExporterBase(ISettings settings, ILogger logger)
+		public AssetImporterExporterBase(IIoSettings settings, ILogger logger)
 		{
 			_settings = settings;
 			_logger = logger;

@@ -17,11 +17,11 @@ namespace Blundergat.Io.Ply
 	[AssetImporterExporter(".ply", "Polygon File Format")]
 	public class PlyAssetImporterExporter : AssetImporterExporterBase, IPlyAssetImporterExporter
 	{
-		private readonly ISettings _settings;
+		private readonly IIoSettings _settings;
 		private readonly ILogger<PlyAssetImporterExporter> _logger;
 
 		public PlyAssetImporterExporter(
-			ISettings settings, 
+			IIoSettings settings, 
 			ILogger<PlyAssetImporterExporter> logger) : base(settings, logger)
 		{
 			_settings = settings;

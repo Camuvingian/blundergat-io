@@ -2,7 +2,7 @@
 
 namespace Blundergat.Io.Settings
 {
-	public interface ISettings
+	public interface IIoSettings
 	{
 		public string BaseDirectory { get; set; }
 

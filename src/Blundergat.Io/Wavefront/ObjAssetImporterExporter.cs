@@ -15,7 +15,7 @@ namespace Blundergat.Io.Wavefront
 	public class ObjAssetImporterExporter : AssetImporterExporterBase, IObjAssetImporterExporter
 	{
 		public ObjAssetImporterExporter(
-			ISettings settings,
+			IIoSettings settings,
 			ILogger<ObjAssetImporterExporter> logger) : base(settings, logger)
 		{
 		}
