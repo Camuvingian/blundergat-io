@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Configurations>Debug;Release;Test</Configurations>
+    <Version>1.0.0.0</Version>
+    <Authors>Camuvingian</Authors>
+    <Company>NA</Company>
+    <PackageIcon>monkey_bomb.jpg</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -22,6 +26,10 @@
 
   <ItemGroup>
     <None Remove="Model\DepthMapRaw.cs~RF1ebf9250.TMP" />
+    <None Include="..\..\resources\images\jpeg\monkey_bomb.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

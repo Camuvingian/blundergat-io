@@ -2,10 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>1.0.0.0</Version>
+    <Authors>Camuvingian</Authors>
+    <Company>NA</Company>
+    <PackageIcon>monkey_bomb.jpg</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Ply\PlyAssetImporterExporter.cs~RF1fd882f8.TMP" />
+    <None Include="..\..\resources\images\jpeg\monkey_bomb.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
