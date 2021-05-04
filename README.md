@@ -32,8 +32,8 @@ Call without logging, assume we already have`IPointCloud pointCloud`
 
 Can get the importer/exporter using enum value
 
-    var assetImporterExporter = _assetImporterExporterFactory.GetImporterExporter(AssetImporterExporterType.Ply);
+    var assetImporterExporter = assetImporterExporterFactory.GetImporterExporter(AssetImporterExporterType.Ply);
 
 Or a file path string
 
-    var assetImporterExporter = _assetImporterExporterFactory.GetImporterExporter(filePath);
+    var assetImporterExporter = assetImporterExporterFactory.GetImporterExporter(filePath);
