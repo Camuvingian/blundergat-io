@@ -1,6 +1,6 @@
 # Blundergat.Io
 
-A import/export library for 3D assets writen using net5.0. Supported formats are Lightwave OBJ (.obj) and Polygon File Format PLY (.ply). This is the core read/write library used in the Blundergat framework. This project was helped by both Meshellator (https://github.com/tgjones/meshellator) and PlyImporter (https://github.com/3DBear/PlyImporter) for the BinaryLittleEndian support. 
+A import/export library for 3D assets written using net5.0. Supported formats are Lightwave OBJ (.obj) and Polygon File Format PLY (.ply). This is the core read/write library used in the Blundergat framework. This project was helped by both Meshellator (https://github.com/tgjones/meshellator) for core formatting and PlyImporter (https://github.com/3DBear/PlyImporter) for the BinaryLittleEndian .ply support. 
 
 # How do I use this to import assets? 
 
