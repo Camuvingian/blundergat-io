@@ -1,0 +1,51 @@
+name: Publish to NuGet
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  nuget-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          source-url: https://api.nuget.org/v3/index.json
+          dotnet-version: 3.1.200
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
+
+      - name: Install GitVersion @5
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with:
+          versionSpec: '5.x'
+          updateProjectFiles: true
+
+      - name: Restore Dependencies
+        run: |
+          dotnet restore src/Blundergat.Common/Blundergat.Common.csproj
+          dotnet restore src/Blundergat.Io/Blundergat.Io.csproj 
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.9.7
+        with:
+          useConfigFile: true
+      - name: Build
+        run: |
+          dotnet build src/Blundergat.Common/Blundergat.Common.csproj --configuration Release --no-restore /p:Version=$GITVERSION_ASSEMBLYSEMVER /p:AssemblyVersion=$GITVERSION_ASSEMBLYSEMVER /p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION
+          dotnet build src/Blundergat.Io/Blundergat.Io.csproj --configuration Release --no-restore /p:Version=$GITVERSION_ASSEMBLYSEMVER /p:AssemblyVersion=$GITVERSION_ASSEMBLYSEMVER /p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION
+      - name: Run Unit Tests
+        run: dotnet test src/Blundergat.Io.Test/Blundergat.Io.Test.csproj --no-restore --verbosity normal
+      - name: Publish to NuGet
+        run: |
+          mkdir __out
+          dotnet pack src/Blundergat.Common/Blundergat.Common.csproj -c Release -o __out --no-restore /p:Version=$GITVERSION_ASSEMBLYSEMVER /p:AssemblyVersion=$GITVERSION_ASSEMBLYSEMVER /p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION
+          dotnet pack src/Blundergat.Io/Blundergat.Io.csproj -c Release -o __out --no-restore /p:Version=$GITVERSION_ASSEMBLYSEMVER /p:AssemblyVersion=$GITVERSION_ASSEMBLYSEMVER /p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION
+          dotnet nuget push "./__out/*.nupkg" --skip-duplicate --no-symbols true --api-key ${{secrets.NUGET_API_KEY}}
+          rm -rf __out
