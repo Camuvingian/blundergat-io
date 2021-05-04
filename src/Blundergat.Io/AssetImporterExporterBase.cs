@@ -26,7 +26,7 @@ namespace Blundergat.Io
 			if (!File.Exists(filePath))
 				throw new IOException($"File \"{filePath}\" not found");
 
-			var scene = await ImportFileImpl(filePath);
+			var scene = await ImportFileImpl(filePath).ConfigureAwait(false);
 			scene.FilePath = filePath;
 
 			ImportCompleted?.Invoke(this, new FileInfo(filePath));
@@ -47,7 +47,7 @@ namespace Blundergat.Io
 				_logger?.LogInformation("File {FilePath} deleted successfully", filePath);
 			}
 
-			await ExportFileImpl(scene, filePath);
+			await ExportFileImpl(scene, filePath).ConfigureAwait(false);
 
 			var fi = new FileInfo(filePath);
 			ExportCompleted?.Invoke(this, fi);
