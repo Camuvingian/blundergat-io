@@ -3,7 +3,7 @@ using Blundergat.Io.Wavefront.Objects.Parsers.Obj;
 using NUnit.Framework;
 using System.Numerics;
 
-namespace Blundergat.Io.Ply.Test
+namespace Blundergat.Io.Test.Ply
 {
 	[TestFixture]
 	public class FaceParserTests

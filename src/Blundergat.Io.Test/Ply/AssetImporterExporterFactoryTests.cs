@@ -4,6 +4,7 @@ using Blundergat.Io.Settings;
 using Blundergat.Io.Wavefront;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Blundergat.Io.Test.Ply
@@ -26,7 +27,24 @@ namespace Blundergat.Io.Test.Ply
 						(AssetImporterExporterType.Ply, new PlyAssetImporterExporter(_mockSettings.Object, null)),
 						(AssetImporterExporterType.Obj, new ObjAssetImporterExporter(_mockSettings.Object, null))
 					});
-			var assetImporterExporter = _assetImporterExporterFactory.GetImporterExporter(AssetImporterExporterType.Ply);
+		}
+
+		[TestCase(AssetImporterExporterType.Obj, ".obj")]
+		[TestCase(AssetImporterExporterType.Ply, ".ply")]
+		public void DoesResolveCorrectExporterUsingEnum(AssetImporterExporterType type, string extension)
+		{
+			var assetImporterExporter = _assetImporterExporterFactory.GetImporterExporter(type);
+			Assert.AreEqual(extension, assetImporterExporter.Extension);
+		}
+
+		[TestCase("pointCloudFileName.obj", typeof(ObjAssetImporterExporter))]
+		[TestCase("pointCloudFileName.ply", typeof(PlyAssetImporterExporter))]
+		[TestCase("C:\\SomeDir\\SomeOtherDir\\pointCloudFileName.obj", typeof(ObjAssetImporterExporter))]
+		[TestCase("C:\\SomeDir\\SomeOtherDir\\pointCloudFileName.ply", typeof(PlyAssetImporterExporter))]
+		public void DoesResolveCorrectExporterUsingFilePath(string filePath, Type type)
+		{
+			var assetImporterExporter = _assetImporterExporterFactory.GetImporterExporter(filePath);
+			Assert.IsAssignableFrom(type, assetImporterExporter);
 		}
 	}
 }

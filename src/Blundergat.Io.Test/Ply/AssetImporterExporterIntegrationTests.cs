@@ -1,8 +1,11 @@
-﻿using Blundergat.Common.Helpers;
+﻿using Blundergat.Common.Adapters;
+using Blundergat.Common.Helpers;
 using Blundergat.Common.Model;
 using Blundergat.Common.Model.Io;
 using Blundergat.Common.Types;
-using Blundergat.Common.Adapters;
+using Blundergat.Io.Ply;
+using Blundergat.Io.Settings;
+using Blundergat.Io.Test.Helpers;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -12,10 +15,8 @@ using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Threading.Tasks;
-using Blundergat.Io.Test.Helpers;
-using Blundergat.Io.Settings;
 
-namespace Blundergat.Io.Ply.Test
+namespace Blundergat.Io.Test.Ply
 {
 	[TestFixture]
 	public class AssetImporterExporterIntegrationTests

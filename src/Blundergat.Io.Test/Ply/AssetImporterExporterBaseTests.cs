@@ -1,7 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Blundergat.Io.Ply;
+using NUnit.Framework;
 using System.IO;
 
-namespace Blundergat.Io.Ply.Test
+namespace Blundergat.Io.Test.Ply
 {
 	[TestFixture]
 	public class AssetImporterExporterBaseTests

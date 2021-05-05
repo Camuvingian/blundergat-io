@@ -5,7 +5,7 @@ using NUnit.Framework;
 using System.IO;
 using System.Linq;
 
-namespace Blundergat.Io.Ply.Test
+namespace Blundergat.Io.Test.Ply
 {
 	[TestFixture]
 	public class PlyElementReaderWriterTests
